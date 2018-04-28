@@ -27,7 +27,7 @@ public class AccountController
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public String trigger()
     {
-        process(68);
+        process(10);
         return "OK";
     }
     @GetMapping({"/{pages}","/{pages}/"})
@@ -37,11 +37,17 @@ public class AccountController
         process(pages);
         return "OK";
     }
+    @GetMapping({"/hello","/hello/"})
+    public  Info greet()
+    {
+        return new Info();
+    }
     private void process(int size)
     {
-        for(int i=0;i < 80;i++)
+        for(int i=0;i < size;i++)
         {
             List<String> result =retriver.selectAllAccount(i,200);
+            System.out.println(result);
             result.stream().forEach(s->processor.submit(s));
         }
 

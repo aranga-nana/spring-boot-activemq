@@ -1,0 +1,267 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description"              : "deploy spring boot app",
+    "Parameters"               : {
+		"VpcId"       : {
+            "Type" : "AWS::EC2::VPC::Id",
+            "Description" : "ec2-app (Spring boot) deployment script"
+        },
+        "ECSCluster" : {
+            "Type" : "String"
+        },
+        "Environment" : {
+            "Type" : "String",
+            "Default" : "prod"
+        },
+        "AppName" : {
+            "Type" : "String",
+            "Default" : "amq-demo"
+        },
+		"ActiveMQBrokerUrl":{
+			"Type" : "String",
+            "Default" : ""
+		},
+        "ELBListenerArn"    : {
+            "Type" : "String",
+            "Default" : "arn:aws:elasticloadbalancing:ap-southeast-2:725126218667:listener/app/Acn-Bau-ELB-19X6HL7MH4HGI/56941520569a7fea/ff1906ffc16a160e"
+        },
+        "ImageTag"          : {
+            "Type" : "String",
+            "Default" : "0.0.3.RELEASE"
+        },
+        "PathPattern"       : {
+            "Type" : "String",
+            "Description" : "path pattern",
+            "Default"     : "/amq-demo*"
+        },
+        "HealtCheck"        : {
+            "Type" : "String",
+            "Description" : "health check path",
+            "Default"     : "/amq-demo/hello"
+        },
+        "MemoryAllocation"  : {
+            "Type" : "String",
+            "Default" : "1024"
+        },
+        "Priority"          : {
+            "Type" : "String",
+            "Default" : "0"
+        },
+        "ContainerPort"     : {
+            "Type" : "Number",
+            "Default" : "80"
+        },
+        "DesiredCount"      : {
+            "Type" : "Number",
+            "Description" : "number of instances",
+            "Default" : "1"
+        }
+    },
+    "Resources"                : {
+        "Service" : {
+            "Type" : "AWS::ECS::Service",
+            
+            "DependsOn" : [
+                "ListenerRule",
+                "ECSServiceRole"
+            ],
+            "Properties" : {
+				
+                "Role" : {
+                    "Ref" : "ECSServiceRole"
+                },
+                "ServiceName" :  { "Ref" : "AppName" },
+                "TaskDefinition" : {
+                    "Ref" : "Taskdefinition"
+                },
+                "DesiredCount"   : {
+                    "Ref" : "DesiredCount"
+                },
+                "LoadBalancers"  : [
+                    {
+                        "TargetGroupArn" : {
+                            "Ref" : "ELBTargetGroup"
+                        },
+                        "ContainerPort"  : "80",
+                        "ContainerName"  : { "Ref" : "AppName" }
+                    }
+                ],
+                "Cluster"        : {
+                    "Ref" : "ECSCluster"
+                },
+				 "HealthCheckGracePeriodSeconds": 500
+                
+            }
+        },
+		"ELBTargetGroup"   : {
+            "Type" : "AWS::ElasticLoadBalancingV2::TargetGroup",
+            "Properties" : {
+                "HealthCheckIntervalSeconds" : 10,
+                "HealthCheckPath"            : { "Ref" : "HealtCheck" },
+                "HealthCheckProtocol"        : "HTTP",
+                "HealthCheckTimeoutSeconds"  : 5,
+                "HealthyThresholdCount"      : 2,
+                "Name"                       : {
+                    "Fn::Join" : [
+                        "-",
+                        [
+                            {
+                                "Ref" : "AppName"
+                            },
+                            "target"
+                        ]
+                    ]
+                },
+                "Port"                       : 80,
+                "Protocol"                   : "HTTP",
+                "UnhealthyThresholdCount"    : 2,
+                "VpcId"                      : {
+                    "Ref" : "VpcId"
+                }
+            }
+        },
+        "Taskdefinition" : {
+            "Type" : "AWS::ECS::TaskDefinition",
+            "Properties" : {
+                "ContainerDefinitions" : [
+                    {
+                        "Name" : { "Ref" : "AppName" },
+                        
+                        "Image"  : {
+                            "Fn::Join" : [
+                                ":",
+                                [
+                                    "aranga/amq-demo",
+                                    {
+                                        "Ref" : "ImageTag"
+                                    }
+                                ]
+                            ]
+                        },
+                        "Cpu"    : "10",
+                        "Essential" : true,
+                        "MemoryReservation" : 512,
+                        "PortMappings" : [
+                            {
+                                "ContainerPort" : 80
+                            }
+                        ],
+                        "Environment"  : [
+							
+                            {
+                                "Name" : "ACTIVEMQ_BROKER_URL",
+                                "Value" :{ "Ref" : "ActiveMQBrokerUrl" }
+                            },
+                          {
+                            "Name" : "ACTIVEMQ_USERNAME",
+                            "Value" :"master"
+                          },                            {
+                            "Name" : "ACTIVEMQ_PASSWORD",
+                            "Value" :""
+                          },
+                          {
+                            "Name" : "SERVER_PORT",
+                            "Value" :"80"
+                          },
+							{
+								"Name" : "BUILD_LABEL",
+                                "Value" : { "Ref" : "ImageTag" }
+							},
+							{
+								"Name" : "DEPLOY_APP_NAME",
+                                "Value" : { "Ref" : "AppName" }
+							},
+							{
+								"Name": "SPRING_PROFILES_ACTIVE",
+                                "Value" : { "Ref" : "Environment" }
+
+							},
+							{
+								"Name" : "ENVIRONMENT",
+                                "Value" : { "Ref" : "Environment" }
+
+
+							}
+                        ]
+                    }
+                ]
+
+                
+            }
+        },
+        "ListenerRule"   : {
+            "Type" : "AWS::ElasticLoadBalancingV2::ListenerRule",
+            "Properties" : {
+                "Actions" : [
+                    {
+                        "Type" : "forward",
+                        "TargetGroupArn" : {
+                            "Ref" : "ELBTargetGroup"
+                        }
+                    }
+                ],
+                "Conditions" : [
+                    {
+                        "Field" : "path-pattern",
+                        "Values" : [
+                            {
+                                "Ref" : "PathPattern"
+                            }
+                        ]
+                        
+                    }
+                ],
+                "ListenerArn" : {
+                    "Ref" : "ELBListenerArn"
+                },
+                
+                "Priority"    : { "Ref" : "Priority" }
+            }
+        },
+        "ECSServiceRole" : {
+            "Type" : "AWS::IAM::Role",
+            "Properties" : {
+                "AssumeRolePolicyDocument" : {
+                    "Statement" : [
+                        {
+                            "Effect" : "Allow",
+                            "Principal" : {
+                                "Service" : [
+                                    "ecs.amazonaws.com"
+                                ]
+                            },
+                            "Action"    : [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Path"                     : "/",
+                "Policies"                 : [
+                    {
+                        "PolicyName" : "ecs-service",
+                        "PolicyDocument" : {
+                            "Statement" : [
+                                {
+                                    "Effect" : "Allow",
+                                    "Action" : [
+                                        "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+                                        "elasticloadbalancing:DeregisterTargets",
+                                        "elasticloadbalancing:Describe*",
+                                        "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+                                        "elasticloadbalancing:RegisterTargets",
+                                        "ec2:Describe*",
+                                        "ec2:AuthorizeSecurityGroupIngress"
+                                    ],
+                                    "Resource" : "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs"                  : {
+    }
+}

@@ -15,15 +15,20 @@ public class ActiveMqConfig
 
     @Value("${activemq.broker.url}")
     private String BROKER_URL;
-    String BROKER_USERNAME = "master";
-    String BROKER_PASSWORD = "password";
+
+    @Value("${activemq.username}")
+    private String BROKER_USERNAME;
+
+    @Value("${activemq.password}")
+    private String BROKER_PASSWORD;
 
     @Bean
     public ActiveMQConnectionFactory connectionFactory(){
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
         connectionFactory.setBrokerURL(BROKER_URL);
-        connectionFactory.setPassword(BROKER_USERNAME);
-        connectionFactory.setUserName(BROKER_PASSWORD);
+        connectionFactory.setPassword(BROKER_PASSWORD);
+        connectionFactory.setUserName(BROKER_USERNAME);
+
         return connectionFactory;
     }
 

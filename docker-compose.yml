@@ -16,7 +16,7 @@ services:
     networks:
       - overlay
   amq-app:
-    image: aranga/amq-app
+    image: amq-demo
     ports:
       - "8082:80"
     environment:
@@ -27,7 +27,7 @@ services:
 
     deploy:
       mode: replicated
-      replicas: 5
+      replicas: 4
     networks:
       - overlay
 

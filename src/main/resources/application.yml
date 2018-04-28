@@ -1,10 +1,10 @@
 server:
+  servlet:
+    contextPath: /amq-demo
   port: 0
 
-management:
-  context-path: /manage
-  security:
-    enabled: false
 activemq:
+  username: master
+  password: password
   broker:
     url: tcp://localhost:61616
