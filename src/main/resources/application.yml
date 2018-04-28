@@ -1,6 +1,10 @@
 server:
   port: 0
 
+management:
+  context-path: /manage
+  security:
+    enabled: false
 activemq:
   broker:
     url: tcp://localhost:61616

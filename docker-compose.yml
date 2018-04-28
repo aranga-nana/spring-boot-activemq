@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   activemq:
-    build: .
+    image: webcenter/activemq:5.14.3
     ports:
         - "8161:8161"
         - "61616:61616"
@@ -16,7 +16,7 @@ services:
     networks:
       - overlay
   amq-app:
-    image: aranga/amq-app:1.0.1.RELEASE
+    image: aranga/amq-app
     ports:
       - "8082:80"
     environment:

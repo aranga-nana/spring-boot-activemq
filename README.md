@@ -8,6 +8,8 @@ simulate data retrieval and processing
 docker swarm init
 
 #to build and run the project
+# you can change the image here. but make sure to change it in the docker-composer.yml (line 19)as well
+docker build . -t aranga/amq-app:latest
 docker stack deploy --compose-file docker-compose.xml amq-demo
 
 ```
