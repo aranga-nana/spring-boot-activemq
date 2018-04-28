@@ -37,7 +37,7 @@
         "HealtCheck"        : {
             "Type" : "String",
             "Description" : "health check path",
-            "Default"     : "/amq-demo/hello"
+            "Default"     : "/amq-demo/actuator/health"
         },
         "MemoryAllocation"  : {
             "Type" : "String",

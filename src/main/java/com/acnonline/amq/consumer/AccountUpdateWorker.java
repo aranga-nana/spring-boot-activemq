@@ -10,7 +10,7 @@ public class AccountUpdateWorker
     @JmsListener(destination = "acnonline.worker.queue")
     public void receiveQueue(String text) {
 
-        int num = 100 + (int)(Math.random()*1200);
+        int num = 300 + (int)(Math.random()*2200);
         sleep(num);
         System.out.println(text+" wait time "+num);
     }
