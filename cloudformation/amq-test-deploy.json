@@ -158,6 +158,10 @@
                           },                            {
                             "Name" : "ACTIVEMQ_PASSWORD",
                             "Value" :""
+                          }
+                        , {
+                                "Name" : "APP_RELOAD_TIME",
+                                "Value" :"3984934893"
                           },
                           {
                             "Name" : "SERVER_PORT",

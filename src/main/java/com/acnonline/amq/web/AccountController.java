@@ -3,6 +3,8 @@ package com.acnonline.amq.web;
 import com.acnonline.amq.service.AccountCodeRetriver;
 import com.acnonline.amq.service.AccountProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import javax.jms.Queue;
 public class AccountController
 {
 
+    @Value("${app.reload.time}")
+    private long appRelaodTime;
 
     @Autowired
     private AccountCodeRetriver retriver;
@@ -40,7 +44,7 @@ public class AccountController
     @GetMapping({"/hello","/hello/"})
     public  Info greet()
     {
-        return new Info();
+        return new Info(appRelaodTime);
     }
     private void process(int size)
     {

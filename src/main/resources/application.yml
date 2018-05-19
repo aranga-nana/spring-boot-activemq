@@ -3,6 +3,12 @@ server:
     contextPath: /amq-demo
   port: 0
 
+spring:
+  application:
+    name: amq-demo
+app:
+  reload:
+    time: -120
 activemq:
   username: master
   password: password
