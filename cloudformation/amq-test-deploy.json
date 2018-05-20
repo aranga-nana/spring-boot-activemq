@@ -107,20 +107,7 @@
                         },
                         "ContainerPort"  : "80",
                         "ContainerName"  : {
-                            "Fn::Join" : [
-                                "-",
-                                [
-                                    {
-                                        "Ref" : "AppName"
-                                    },
-                                    {
-                                        "Ref" :"AWS::StackName"
-                                    },
-                                    "TDef"
-                                ]
-                            ]
-
-
+                           "Ref":"AppName"
                         }
                     }
                 ],
