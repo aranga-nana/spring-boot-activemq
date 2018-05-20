@@ -43,7 +43,7 @@
   },
   {
     "ParameterKey": "ECSCluster",
-    "ParameterValue": "ECS_CLUSTER_NAME$"
+    "ParameterValue": "%ECS_CLUSTER_NAME%"
   },
   {
     "ParameterKey": "DesiredCount",
