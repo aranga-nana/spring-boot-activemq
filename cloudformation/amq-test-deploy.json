@@ -109,7 +109,7 @@
                                 "Ref" : "AppName"
                             },
                             {
-                                "Ref" :"AWS::StackId"
+                                "Ref" :"AWS::StackName"
                             },
                             "target"
                         ]
