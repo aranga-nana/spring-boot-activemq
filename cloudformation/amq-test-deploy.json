@@ -189,7 +189,7 @@
                             },
                           {
                                 "Name" : "APP_RELOAD_TIME",
-                                "Value" :"3984934893"
+                                "Value" :"-10000"
                           },
                           {
                             "Name" : "SERVER_PORT",
