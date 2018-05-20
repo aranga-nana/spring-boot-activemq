@@ -55,6 +55,11 @@
             "Type" : "Number",
             "Description" : "number of instances",
             "Default" : "1"
+        },
+        "ActiveMQPassword"      : {
+            "Type" : "String",
+            "Description" : "number of instances",
+            "Default" : "password"
         }
     },
     "Resources"                : {
@@ -184,7 +189,7 @@
 							},
                             {
                                 "Name" : "ACTIVEMQ_PASSWORD",
-                                "Value" : { "Ref" : "Environment" }
+                                "Value" : { "Ref" : "ActiveMQPassword" }
 
 
                             }

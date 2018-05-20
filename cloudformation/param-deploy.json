@@ -54,7 +54,7 @@
     "ParameterValue": "10"
   },
   {
-    "ParameterKey": "ACTIVEMQ_PASSWORD",
+    "ParameterKey": "ActiveMQPassword",
     "ParameterValue": "%ACTIVEMQ_PASSWORD%"
   }
 ]
