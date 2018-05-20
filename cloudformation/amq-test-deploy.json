@@ -78,7 +78,7 @@
                 "Role" : {
                     "Ref" : "ECSServiceRole"
                 },
-                "ServiceName" :  { "Ref" : "AppName" },
+                "ServiceName" :  "my-test-service",
                 "TaskDefinition" : {
                     "Ref" : "Taskdefinition"
                 },
