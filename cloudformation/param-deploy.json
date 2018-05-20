@@ -56,5 +56,9 @@
   {
     "ParameterKey": "ActiveMQPassword",
     "ParameterValue": "%ACTIVEMQ_PASSWORD%"
+  },
+  {
+    "ParameterKey": "ECRRepo",
+    "ParameterValue": "%DOCKER_REPO%"
   }
 ]

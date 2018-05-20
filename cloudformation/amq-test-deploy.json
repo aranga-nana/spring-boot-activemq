@@ -6,6 +6,9 @@
             "Type" : "AWS::EC2::VPC::Id",
             "Description" : "ec2-app (Spring boot) deployment script"
         },
+        "ECRRepo":{
+            "Type":"String"
+        },
         "ECSCluster" : {
             "Type" : "String"
         },
@@ -137,9 +140,16 @@
                         
                         "Image"  : {
                             "Fn::Join" : [
-                                ":",
+                                "",
                                 [
-                                    "aranga/amq-demo",
+                                    {
+                                      "Ref":"ECRRepo"
+                                    },
+                                    "/",
+                                    {
+                                        "Ref":"AppName"
+                                    },
+                                    ":",
                                     {
                                         "Ref" : "ImageTag"
                                     }
