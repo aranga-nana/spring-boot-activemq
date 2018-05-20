@@ -22,7 +22,7 @@
   },
   {
     "ParameterKey": "AppName",
-    "ParameterValue": "demo-amq-app"
+    "ParameterValue": "%APP_NAME%"
   },
   {
     "ParameterKey": "ActiveMQBrokerUrl",
