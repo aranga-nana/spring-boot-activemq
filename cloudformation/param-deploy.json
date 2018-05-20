@@ -51,11 +51,15 @@
   },
   {
     "ParameterKey": "Priority",
-    "ParameterValue": "10"
+    "ParameterValue": "%PRIORITY%"
   },
   {
     "ParameterKey": "ActiveMQPassword",
     "ParameterValue": "%ACTIVEMQ_PASSWORD%"
+  },
+  {
+    "ParameterKey": "ECRRepo",
+    "ParameterValue": "%DOCKER_REPO%"
   },
   {
     "ParameterKey": "ECRRepo",
