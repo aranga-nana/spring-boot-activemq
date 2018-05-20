@@ -52,5 +52,9 @@
   {
     "ParameterKey": "Priority",
     "ParameterValue": "10"
+  },
+  {
+    "ParameterKey": "ACTIVEMQ_PASSWORD",
+    "ParameterValue": "%ACTIVEMQ_PASSWORD%"
   }
 ]

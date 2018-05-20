@@ -181,7 +181,13 @@
                                 "Value" : { "Ref" : "Environment" }
 
 
-							}
+							},
+                            {
+                                "Name" : "ACTIVEMQ_PASSWORD",
+                                "Value" : { "Ref" : "Environment" }
+
+
+                            }
                         ]
                     }
                 ]
