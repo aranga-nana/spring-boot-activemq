@@ -1,0 +1,56 @@
+[
+
+  {
+    "ParameterKey": "PathPattern",
+    "ParameterValue": "/amq-demo*"
+  },
+  {
+    "ParameterKey": "HealtCheck",
+    "ParameterValue": "/amq-demo/actuator/health"
+  },
+  {
+    "ParameterKey": "ContainerPort",
+    "ParameterValue": "80"
+  },
+  {
+    "ParameterKey": "VpcId",
+    "ParameterValue": "%VPC_ID%"
+  },
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "%ENV_NAME%"
+  },
+  {
+    "ParameterKey": "AppName",
+    "ParameterValue": "demo-amq-app"
+  },
+  {
+    "ParameterKey": "ActiveMQBrokerUrl",
+    "ParameterValue": "%MQ_BROKER%"
+  },
+  {
+    "ParameterKey": "ELBListenerArn",
+    "ParameterValue": "%ELB_ARN%"
+  },
+
+  {
+    "ParameterKey": "MemoryAllocation",
+    "ParameterValue": "%MEMORY_ALLOCATION%"
+  },
+  {
+    "ParameterKey": "ImageTag",
+    "ParameterValue": "%IMAGE_VERSION%"
+  },
+  {
+    "ParameterKey": "ECSCluster",
+    "ParameterValue": "ECS_CLUSTER_NAME$"
+  },
+  {
+    "ParameterKey": "DesiredCount",
+    "ParameterValue": "%NUM_CONTAINERS%"
+  },
+  {
+    "ParameterKey": "Priority",
+    "ParameterValue": "10"
+  }
+]

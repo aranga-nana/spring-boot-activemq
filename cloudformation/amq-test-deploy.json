@@ -153,13 +153,6 @@
                                 "Value" :{ "Ref" : "ActiveMQBrokerUrl" }
                             },
                           {
-                            "Name" : "ACTIVEMQ_USERNAME",
-                            "Value" :"master"
-                          },                            {
-                            "Name" : "ACTIVEMQ_PASSWORD",
-                            "Value" :""
-                          }
-                        , {
                                 "Name" : "APP_RELOAD_TIME",
                                 "Value" :"3984934893"
                           },
