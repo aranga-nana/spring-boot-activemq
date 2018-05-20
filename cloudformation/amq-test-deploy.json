@@ -78,7 +78,22 @@
                 "Role" : {
                     "Ref" : "ECSServiceRole"
                 },
-                "ServiceName" :  "my-test-service",
+                "ServiceName" :  {
+
+                    "Fn::Join" : [
+                        "-",
+                        [
+                            {
+                                "Ref" : "AppName"
+                            },
+                            {
+                                "Ref" :"AWS::StackName"
+                            },
+                            "SVR"
+                        ]
+                    ]
+
+                },
                 "TaskDefinition" : {
                     "Ref" : "Taskdefinition"
                 },
@@ -91,7 +106,22 @@
                             "Ref" : "ELBTargetGroup"
                         },
                         "ContainerPort"  : "80",
-                        "ContainerName"  : { "Ref" : "AppName" }
+                        "ContainerName"  : {
+                            "Fn::Join" : [
+                                "-",
+                                [
+                                    {
+                                        "Ref" : "AppName"
+                                    },
+                                    {
+                                        "Ref" :"AWS::StackName"
+                                    },
+                                    "TDef"
+                                ]
+                            ]
+
+
+                        }
                     }
                 ],
                 "Cluster"        : {
